@@ -7,7 +7,7 @@ public class User {
     private String password;
     private String image_url;
     private Boolean is_verified;
-    private String phone_number;
+    // private String phone_number;
     private Config.Role role;
 
     public User() {
@@ -19,14 +19,14 @@ public class User {
             String password,
             String image_url,
             Boolean is_verified,
-            String phone_number,
+            // String phone_number,
             Config.Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.image_url = image_url;
         this.is_verified = is_verified;
-        this.phone_number = phone_number;
+        // this.phone_number = phone_number;
         this.role = role;
     }
 
@@ -74,13 +74,13 @@ public class User {
         this.is_verified = is_verified;
     }
 
-    public String getPhone_number() {
-        return phone_number;
-    }
+    // public String getPhone_number() {
+    // return phone_number;
+    // }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
-    }
+    // public void setPhone_number(String phone_number) {
+    // this.phone_number = phone_number;
+    // }
 
     public String getRole() {
         switch (role) {

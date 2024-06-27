@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import javax.sql.DataSource;
+import org.springframework.context.annotation.Bean;
 
 import me.truongng.journeymapapi.models.User;
 
@@ -13,6 +15,7 @@ import me.truongng.journeymapapi.models.User;
 public class UserRepository implements UserRepositoryInterface {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
 
     @Override
     public boolean create(User user) {

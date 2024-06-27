@@ -28,7 +28,7 @@ RUN mvn dependency:go-offline -B
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the application
-FROM openjdk:21-jdk-slim
+FROM openjdk:21-jdk-slim as run
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -36,8 +36,19 @@ WORKDIR /app
 # Copy the jar file from the previous stage
 COPY --from=build /app/target/journey-map-api-0.0.1-SNAPSHOT.jar /app/journey-map-api-0.0.1-SNAPSHOT.jar
 
+# Create a new user to run the application
+RUN adduser --system --no-create-home --group api
+
+# Add executable permissions to the jar file
+RUN chmod +x /app/journey-map-api-0.0.1-SNAPSHOT.jar \
+    && chown api:api /app/journey-map-api-0.0.1-SNAPSHOT.jar
+
+# Switch to the new user
+USER api
+
 # Expose the port the application runs on
 EXPOSE 8080
+
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "/app/journey-map-api-0.0.1-SNAPSHOT.jar"]
