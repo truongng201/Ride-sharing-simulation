@@ -1,0 +1,21 @@
+version: "3.1"
+services:
+  # api:
+  #   build: .
+  #   container_name: api
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - .:/app
+
+  database:
+    image: postgres:14-alpine
+    container_name: database
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: journey_map
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database-data:/var/lib/postgresql/data
