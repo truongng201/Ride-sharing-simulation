@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM openjdk:17-jdk-slim AS build
+FROM openjdk:21-jdk-slim AS build
 
 # Define the Maven version to install
 ARG MAVEN_VERSION=3.9.6
@@ -28,7 +28,7 @@ RUN mvn dependency:go-offline -B
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the application
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 # Set the working directory inside the container
 WORKDIR /app
