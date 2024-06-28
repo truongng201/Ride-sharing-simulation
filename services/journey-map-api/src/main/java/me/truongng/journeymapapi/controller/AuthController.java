@@ -26,8 +26,8 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<Map<String, Object>> signin(
             @RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        String password = body.get("password");
+        String email = body.getOrDefault("email", null);
+        String password = body.getOrDefault("password", null);
         if (email == null || password == null) {
             return ResponseHandler.responseBuilder(
                     HttpStatus.BAD_REQUEST,
@@ -76,44 +76,50 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<Map<String, Object>> signup(
             @RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        String password = body.get("password");
-        String username = body.get("username");
-        String role = body.get("role");
-        if (email == null || password == null || username == null) {
+        try {
+            String email = body.get("email");
+            String password = body.get("password");
+            String username = body.get("username");
+            String role = body.get("role");
+            if (email.equals("") || password.equals("") || username.equals("") || role.equals("")) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.BAD_REQUEST,
+                        "Email, password, and username are required");
+            }
+
+            List<User> users = userRepository.findByEmail(email);
+            if (users.size() > 0) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.BAD_REQUEST,
+                        "Email is already taken");
+            }
+
+            User user = new User(
+                    username,
+                    email,
+                    password,
+                    null,
+                    false,
+                    Config.Role.valueOf(role));
+
+            boolean res = userRepository.create(user);
+            if (!res) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Failed to create user");
+            }
+
             return ResponseHandler.responseBuilder(
-                    HttpStatus.BAD_REQUEST,
-                    "Email, password, and username are required");
-        }
-
-        List<User> users = userRepository.findByEmail(email);
-        if (users.size() > 0) {
-            return ResponseHandler.responseBuilder(
-                    HttpStatus.BAD_REQUEST,
-                    "Email is already taken");
-        }
-
-        User user = new User(
-                username,
-                email,
-                password,
-                null,
-                false,
-                Config.Role.valueOf(role));
-
-        boolean res = userRepository.create(user);
-        if (!res) {
+                    HttpStatus.CREATED,
+                    null);
+        } catch (Exception e) {
             return ResponseHandler.responseBuilder(
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Failed to create user");
+                    e.getMessage());
         }
-
-        return ResponseHandler.responseBuilder(
-                HttpStatus.CREATED,
-                null);
     }
 
-    @GetMapping("/signout")
+    @PostMapping("/signout")
     public ResponseEntity<Map<String, Object>> signout() {
         return ResponseHandler.responseBuilder(
                 HttpStatus.OK,
