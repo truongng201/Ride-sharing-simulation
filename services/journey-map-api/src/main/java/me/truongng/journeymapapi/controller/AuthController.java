@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import me.truongng.journeymapapi.utils.ResponseHandler;
 import me.truongng.journeymapapi.repository.UserRepository;
@@ -21,7 +23,10 @@ import me.truongng.journeymapapi.models.Config;
 public class AuthController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
     private RefreshTokenRepository refreshTokenRepository;
+
+    private Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/signin")
     public ResponseEntity<Map<String, Object>> signin(
@@ -43,27 +48,25 @@ public class AuthController {
             }
 
             User user = users.get(0);
-            System.out.println(user);
-            
+
             if (!user.getPassword().equals(password)) {
                 return ResponseHandler.responseBuilder(
                         HttpStatus.UNAUTHORIZED,
                         "Invalid email or password");
             }
 
-            RefreshToken refreshToken = new RefreshToken(
-                    "random_refresh_token",
-                    null,
-                    null,
-                    null,
-                    user);
+            // RefreshToken refreshToken = new RefreshToken(
+            // "random_refresh_token",
+            // null,
+            // null,
+            // null,
+            // user);
 
-            boolean res = refreshTokenRepository.create(refreshToken);
-            if (!res) {
-                return ResponseHandler.responseBuilder(
-                        HttpStatus.INTERNAL_SERVER_ERROR,
-                        "Failed to create refresh token");
-            }
+            // if (!refreshTokenRepository.create(refreshToken)) {
+            // return ResponseHandler.responseBuilder(
+            // HttpStatus.INTERNAL_SERVER_ERROR,
+            // "Failed to create refresh token");
+            // }
 
             return ResponseHandler.responseBuilder(
                     HttpStatus.OK,
@@ -75,6 +78,7 @@ public class AuthController {
 
                     });
         } catch (Exception e) {
+            log.error("Error signing in: " + e.getMessage());
             return ResponseHandler.responseBuilder(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     e.getMessage());
@@ -103,6 +107,7 @@ public class AuthController {
             }
 
             User user = new User(
+                    null,
                     username,
                     email,
                     password,

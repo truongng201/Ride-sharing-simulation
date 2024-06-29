@@ -2,12 +2,15 @@ package me.truongng.journeymapapi.repository;
 
 import java.util.List;
 
+import java.sql.ResultSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import me.truongng.journeymapapi.models.User;
+import me.truongng.journeymapapi.models.Config;
 
 @Repository
 public class UserRepository implements UserRepositoryInterface {
@@ -46,8 +49,15 @@ public class UserRepository implements UserRepositoryInterface {
     @Override
     public List<User> findById(String id) {
         return jdbcTemplate.query(
-                "SELECT id, username, email, role, image_url, is_verified FROM users WHERE id = ?",
-                BeanPropertyRowMapper.newInstance(User.class),
+                "SELECT id, username, email, hashed_password, image_url, is_verified, role FROM users WHERE id = ?",
+                (ResultSet rs, int rowNum) -> new User(
+                        rs.getString("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("hashed_password"),
+                        rs.getString("image_url"),
+                        rs.getBoolean("is_verified"),
+                        Config.Role.valueOf(rs.getString("role"))),
                 id);
     }
 
@@ -62,14 +72,29 @@ public class UserRepository implements UserRepositoryInterface {
     public List<User> findAll() {
         return jdbcTemplate.query(
                 "SELECT id, username, email, role, image_url, is_verified FROM users",
-                BeanPropertyRowMapper.newInstance(User.class));
+                (ResultSet rs, int rowNum) -> new User(
+                        rs.getString("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("hashed_password"),
+                        rs.getString("image_url"),
+                        rs.getBoolean("is_verified"),
+                        Config.Role.valueOf(rs.getString("role"))));
     }
 
     @Override
     public List<User> findByEmail(String email) {
         return jdbcTemplate.query(
                 "SELECT id, username, hashed_password, email, role, image_url, is_verified FROM users WHERE email = ?",
-                BeanPropertyRowMapper.newInstance(User.class),
+                (ResultSet rs, int rowNum) -> new User(
+                        rs.getString("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("hashed_password"),
+                        rs.getString("image_url"),
+                        rs.getBoolean("is_verified"),
+                        Config.Role.valueOf(rs.getString("role"))),
                 email);
+
     }
 }

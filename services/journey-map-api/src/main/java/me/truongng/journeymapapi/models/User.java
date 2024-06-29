@@ -14,6 +14,7 @@ public class User {
     }
 
     public User(
+            String id,
             String username,
             String email,
             String hashed_password,
@@ -21,6 +22,7 @@ public class User {
             Boolean is_verified,
             // String phone_number,
             Config.Role role) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.hashed_password = hashed_password;
@@ -32,6 +34,10 @@ public class User {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
