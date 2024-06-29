@@ -26,51 +26,59 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<Map<String, Object>> signin(
             @RequestBody Map<String, String> body) {
-        String email = body.getOrDefault("email", null);
-        String password = body.getOrDefault("password", null);
-        if (email == null || password == null) {
+        try {
+            String email = body.getOrDefault("email", null);
+            String password = body.getOrDefault("password", null);
+            if (email == null || password == null) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.BAD_REQUEST,
+                        "Email and password are required");
+            }
+
+            List<User> users = userRepository.findByEmail(email);
+            if (users.size() == 0) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.UNAUTHORIZED,
+                        "Invalid email or password");
+            }
+
+            User user = users.get(0);
+            System.out.println(user);
+            
+            if (!user.getPassword().equals(password)) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.UNAUTHORIZED,
+                        "Invalid email or password");
+            }
+
+            RefreshToken refreshToken = new RefreshToken(
+                    "random_refresh_token",
+                    null,
+                    null,
+                    null,
+                    user);
+
+            boolean res = refreshTokenRepository.create(refreshToken);
+            if (!res) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Failed to create refresh token");
+            }
+
             return ResponseHandler.responseBuilder(
-                    HttpStatus.BAD_REQUEST,
-                    "Email and password are required");
-        }
+                    HttpStatus.OK,
+                    new HashMap<>() {
+                        {
+                            put("access_token", "random_access_token");
+                            put("refresh_token", "random_refresh_token");
+                        }
 
-        List<User> users = userRepository.findByEmail(email);
-        if (users.size() == 0) {
-            return ResponseHandler.responseBuilder(
-                    HttpStatus.UNAUTHORIZED,
-                    "Invalid email or password");
-        }
-
-        User user = users.get(0);
-        if (!user.getPassword().equals(password)) {
-            return ResponseHandler.responseBuilder(
-                    HttpStatus.UNAUTHORIZED,
-                    "Invalid email or password");
-        }
-
-        RefreshToken refreshToken = new RefreshToken(
-                "random_refresh_token",
-                null,
-                null,
-                null,
-                user);
-
-        boolean res = refreshTokenRepository.create(refreshToken);
-        if (!res) {
+                    });
+        } catch (Exception e) {
             return ResponseHandler.responseBuilder(
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Failed to create refresh token");
+                    e.getMessage());
         }
-
-        return ResponseHandler.responseBuilder(
-                HttpStatus.OK,
-                new HashMap<>() {
-                    {
-                        put("access_token", "random_access_token");
-                        put("refresh_token", "random_refresh_token");
-                    }
-
-                });
     }
 
     @PostMapping("/signup")

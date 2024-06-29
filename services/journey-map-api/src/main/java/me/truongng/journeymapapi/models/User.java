@@ -4,7 +4,7 @@ public class User {
     private String id;
     private String username;
     private String email;
-    private String password;
+    private String hashed_password;
     private String image_url;
     private Boolean is_verified;
     // private String phone_number;
@@ -16,14 +16,14 @@ public class User {
     public User(
             String username,
             String email,
-            String password,
+            String hashed_password,
             String image_url,
             Boolean is_verified,
             // String phone_number,
             Config.Role role) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.hashed_password = hashed_password;
         this.image_url = image_url;
         this.is_verified = is_verified;
         // this.phone_number = phone_number;
@@ -51,11 +51,11 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return hashed_password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String hashed_password) {
+        this.hashed_password = hashed_password;
     }
 
     public String getImage_url() {
@@ -117,7 +117,7 @@ public class User {
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", hashed_password='" + hashed_password + '\'' +
                 ", image_url='" + image_url + '\'' +
                 ", is_verified=" + is_verified +
                 '}';

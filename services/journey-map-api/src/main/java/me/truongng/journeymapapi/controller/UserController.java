@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import me.truongng.journeymapapi.repository.UserRepository;
 import me.truongng.journeymapapi.utils.ResponseHandler;
@@ -21,10 +23,12 @@ import me.truongng.journeymapapi.models.User;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/user/:id")
     public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable("id") String id) {
         try {
+            log.info("Getting user info for user with id: " + id);
             List<User> users = userRepository.findById(id);
 
             if (users.size() == 0) {
