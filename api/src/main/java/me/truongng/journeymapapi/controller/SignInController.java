@@ -25,7 +25,7 @@ import me.truongng.journeymapapi.validation.SignInValidation;
 import me.truongng.journeymapapi.utils.PasswordHasher;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class SignInController {
     @Autowired
     private UserRepository userRepository;

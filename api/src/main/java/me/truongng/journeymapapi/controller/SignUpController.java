@@ -22,7 +22,7 @@ import me.truongng.journeymapapi.utils.exception.*;
 import me.truongng.journeymapapi.validation.SignUpValidation;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class SignUpController {
     @Autowired
     private UserRepository userRepository;
