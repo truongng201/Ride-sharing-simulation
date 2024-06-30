@@ -101,6 +101,19 @@ public class Driver {
         this.kilometers_driven = kilometers_driven;
     }
 
+    @Override 
+	public boolean equals(Object o) {
+		if (this == o) return true; 
+		if (o == null || getClass() != o.getClass()) return false;  
+		Driver D = (Driver) o;
+		return (D.id.equals(id)); 
+	}
+	
+	@Override
+    public int hashCode() {
+        return Objects.hash(id); 
+    }
+    
     @Override
     public String toString() {
         return "Driver{" +
