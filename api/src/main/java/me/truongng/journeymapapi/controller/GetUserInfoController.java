@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import me.truongng.journeymapapi.repository.UserRepository;
 import me.truongng.journeymapapi.utils.ResponseHandler;
 import me.truongng.journeymapapi.models.User;
+import me.truongng.journeymapapi.utils.exception.*;
 
 @RestController
 @RequestMapping("/")

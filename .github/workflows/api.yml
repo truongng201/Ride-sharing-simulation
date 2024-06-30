@@ -48,7 +48,7 @@ jobs:
 
       - name: Add application properties
         run: |
-          cd api
+          ls -a
           echo ${{ secrets.API_APPLICATION_PROPERTIES }} > src/main/resources/application.properties
 
       - name: Build Api Docker image
