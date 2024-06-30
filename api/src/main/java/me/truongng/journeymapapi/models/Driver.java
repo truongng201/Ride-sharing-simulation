@@ -27,6 +27,10 @@ public class Driver {
         this.kilometers_driven = kilometers_driven;
     }
 
+    public Driver(Location location) {
+    	this.location = location;
+    }
+    
     public String getId() {
         return id;
     }
