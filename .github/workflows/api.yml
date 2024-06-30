@@ -47,10 +47,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Add application properties
-        run: |
-          ls -a
-          echo "${{ secrets.API_APPLICATION_PROPERTIES }}" > api/src/main/resources/application.properties
-          cat api/src/main/resources/application.properties
+        run: echo ${{ secrets.API_APPLICATION_PROPERTIES }} > api/src/main/resources/application.properties
 
       - name: Build Api Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKERHUB_REPOSITORY}}-api:latest ./api
