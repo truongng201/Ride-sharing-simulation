@@ -19,31 +19,23 @@ import me.truongng.journeymapapi.utils.ResponseHandler;
 import me.truongng.journeymapapi.models.User;
 
 @RestController
-@RequestMapping("/api")
-public class UserController {
+@RequestMapping("/")
+public class GetUserInfoController {
     @Autowired
     private UserRepository userRepository;
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(GetUserInfoController.class);
 
     @GetMapping("/user/:id")
     public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable("id") String id) {
-        try {
-            log.info("Getting user info for user with id: " + id);
-            List<User> users = userRepository.findById(id);
+        log.info("Getting user info for user with id: " + id);
+        List<User> users = userRepository.findById(id);
 
-            if (users.size() == 0) {
-                return ResponseHandler.responseBuilder(
-                        HttpStatus.NOT_FOUND, "User not found");
-            }
+        if (users.size() == 0)
+            throw new NotFoundException("User not found");
 
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("user", users.get(0));
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("user", users.get(0));
 
-            return ResponseHandler.responseBuilder(
-                    HttpStatus.OK, data);
-        } catch (Exception e) {
-            return ResponseHandler.responseBuilder(
-                    HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
+        return ResponseHandler.responseBuilder(HttpStatus.OK, response);
     }
 }

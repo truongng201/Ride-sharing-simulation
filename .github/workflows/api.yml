@@ -49,7 +49,7 @@ jobs:
       - name: Add application properties
         run: |
           cd api
-          echo "${{ secrets.API_APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
+          echo ${{ secrets.API_APPLICATION_PROPERTIES }} > src/main/resources/application.properties
 
       - name: Build Api Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKERHUB_REPOSITORY}}-api:latest ./api
