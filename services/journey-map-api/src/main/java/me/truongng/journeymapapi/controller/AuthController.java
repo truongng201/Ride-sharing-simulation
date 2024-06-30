@@ -55,18 +55,14 @@ public class AuthController {
                         "Invalid email or password");
             }
 
-            // RefreshToken refreshToken = new RefreshToken(
-            // "random_refresh_token",
-            // null,
-            // null,
-            // null,
-            // user);
+            RefreshToken refreshToken = new RefreshToken(
+                    "random_refresh_token", user);
 
-            // if (!refreshTokenRepository.create(refreshToken)) {
-            // return ResponseHandler.responseBuilder(
-            // HttpStatus.INTERNAL_SERVER_ERROR,
-            // "Failed to create refresh token");
-            // }
+            if (!refreshTokenRepository.create(refreshToken)) {
+                return ResponseHandler.responseBuilder(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Failed to create refresh token");
+            }
 
             return ResponseHandler.responseBuilder(
                     HttpStatus.OK,

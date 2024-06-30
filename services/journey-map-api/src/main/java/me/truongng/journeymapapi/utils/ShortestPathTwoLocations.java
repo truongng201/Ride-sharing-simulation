@@ -58,7 +58,7 @@ class DEsopoPape {
 
 }
 
-public class ShortestPath {
+public class ShortestPathTwoLocations {
 
     static public double getDistance(Location From, Location To) {
         return Dijkstra.get(From, To);

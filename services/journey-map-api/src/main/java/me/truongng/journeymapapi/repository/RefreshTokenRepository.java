@@ -18,7 +18,7 @@ public class RefreshTokenRepository implements RefreshTokenRepositoryInterface {
 
     @Override
     public boolean create(RefreshToken refreshToken) {
-        
+
         int res = jdbcTemplate.update(
                 "INSERT INTO refresh_tokens (token, user_id) VALUES (?, ?)",
                 refreshToken.getToken(),
@@ -32,9 +32,6 @@ public class RefreshTokenRepository implements RefreshTokenRepositoryInterface {
                 "SELECT token, user_id FROM refresh_tokens WHERE token = ?",
                 (ResultSet rs, int rowNum) -> new RefreshToken(
                         rs.getString("token"),
-                        null,
-                        null,
-                        null,
                         new User(rs.getString("user_id"), null, null, null, null, null, null)),
                 token);
     }

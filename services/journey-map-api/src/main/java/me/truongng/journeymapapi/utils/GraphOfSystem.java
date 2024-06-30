@@ -8,14 +8,14 @@ import me.truongng.journeymapapi.models.Location;
 public class GraphOfSystem {
     static HashMap<Location, ArrayList<Location>> adj = new HashMap<Location, ArrayList<Location>>();
 
-    public void addEdge(Location from, Location to) {
+    public static void addUnDirectedEdge(Location from, Location to) {
         // đường 1 chiều
         adj.get(from).add(to);
     }
 
     // ToP là danh sách những Location có đường nối tới P
     // FromP là danh sách những Location từ P có đường nối tới
-    static public void addLocationToMap(Location p, ArrayList<Location> ToP, ArrayList<Location> FromP) {
+    public static void addLocationToMap(Location p, ArrayList<Location> ToP, ArrayList<Location> FromP) {
         adj.put(p, new ArrayList<Location>());
         if (ToP != null) {
             for (Location From : ToP)
