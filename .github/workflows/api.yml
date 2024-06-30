@@ -47,8 +47,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Add application properties
-        run: cd api/src/main/resources
-          ls -la
+        run: |
+          cd api/src/main/resources &&
+          ls -la &&
           echo "${{ secrets.API_APPLICATION_PROPERTIES }}" > application.properties
 
       - name: Build Api Docker image
