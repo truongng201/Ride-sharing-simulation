@@ -25,8 +25,8 @@ public class RefreshToken {
         this.token = token;
     }
 
-    public String getUserID() {
-        return user.getId();
+    public Integer getUserID() {
+        return user == null ? null : Integer.parseInt(user.getId());
     }
 
     @Override

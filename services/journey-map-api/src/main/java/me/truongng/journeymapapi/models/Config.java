@@ -20,4 +20,31 @@ public class Config {
         CAR4,
         CAR7
     }
+
+    public static boolean isValidRole(String input) {
+        for (Role role : Role.values()) {
+            if (role.name().equals(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isValidRideStatus(String input) {
+        for (RideStatus status : RideStatus.values()) {
+            if (status.name().equals(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isValidVehicleType(String input) {
+        for (VehicleType type : VehicleType.values()) {
+            if (type.name().equals(input)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
