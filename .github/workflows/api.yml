@@ -64,6 +64,7 @@ jobs:
 
       - name: Add application properties
         run: |
+          cd api
           echo "${{ secrets.API_APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
           
       - name: Install SSH key
