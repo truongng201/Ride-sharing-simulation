@@ -60,10 +60,19 @@ class DEsopoPape {
 
 public class ShortestPathTwoLocations {
 
-    static public double getDistance(Location From, Location To) {
-        return Dijkstra.get(From, To);
-
-    }
+    	static public double getDistance(Location From, Location To) {
+		From = GenMap.modifiedLocation.get(From);
+		To = GenMap.modifiedLocation.get(To);
+		return Dijkstra.getDistance(From, To);
+		
+	}
+	
+	static public List<Location> getPath(Location From, Location To){
+		System.out.println(From + " " + GenMap.modifiedLocation.get(From));
+		From = GenMap.modifiedLocation.get(From);
+		To = GenMap.modifiedLocation.get(To);
+		return Dijkstra.getPath(From, To);
+	}
 
     // public static void main(String[] args) {
     //     // testing
