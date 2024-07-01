@@ -53,7 +53,7 @@ public class DriverSearch {
         // tìm tài xế tối ưu cho khách hàng
         Driver nearestCentroids = new Driver();
         for (Driver centroids : clusterings.keySet()) {
-            if (nearestCentroids == null ||
+            if (nearestCentroids.getId() == null ||
                     centroids.getLocation().distanceTo(customer.getLocation()) < nearestCentroids.getLocation()
                             .distanceTo(customer.getLocation()))
                 nearestCentroids = centroids;
@@ -69,7 +69,7 @@ public class DriverSearch {
         // tìm tài xế tối ưu cho khách hàng
         Driver nearestCentroids = new Driver();
         for (Driver centroids : clusterings.keySet()) {
-            if (nearestCentroids == null ||
+            if (nearestCentroids.getId() == null ||
                     centroids.getLocation().distanceTo(customer.getLocation()) < nearestCentroids.getLocation()
                             .distanceTo(customer.getLocation()))
                 nearestCentroids = centroids;

@@ -73,7 +73,7 @@ public class BookDriveController {
         DriverSearch driverSearch = new DriverSearch(clusters);
 
         Driver bestDriver = driverSearch.findBestDriver(currCustomer);
-
+        System.out.println("Best driver: " + bestDriver);
         Ride ride = new Ride(currCustomer,
                 bestDriver, new Location(currX, currY), new Location(desX, desY),
                 RideStatus.REQUESTED, 0, 0);

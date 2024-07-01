@@ -24,17 +24,17 @@ import me.truongng.journeymapapi.repository.DriverRepository;
 import me.truongng.journeymapapi.utils.exception.NotFoundException;
 
 @RestController
-@RequestMapping("/get-all-best-driver")
-public class GetAllBestDriverController {
+@RequestMapping("/get-all-best-drivers")
+public class GetAllBestDriversController {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private DriverRepository driverRepository;
-    @Autowired
+
     private Logger log = LoggerFactory.getLogger(BookDriveController.class);
 
     @GetMapping("")
-    public ResponseEntity<Map<String, Object>> bookDrive(@RequestParam String customerID) {
+    public ResponseEntity<Map<String, Object>> getAll(@RequestParam String customerID) {
         log.info("GetAllBestDriver.request_payload: " + customerID);
 
         if (customerID == null)
@@ -52,10 +52,20 @@ public class GetAllBestDriverController {
         KMeansClustering kMeans = new KMeansClustering(numberOfClusters, drivers);
         kMeans.run(100, 0.01);
         Map<Driver, List<Driver>> clusters = kMeans.getClusters();
+
         DriverSearch driverSearch = new DriverSearch(clusters);
 
+        for (Map.Entry<Driver, List<Driver>> entry : clusters.entrySet()) {
+            System.out.println(
+                    "Centroid: " + entry.getKey().getLocation().getX() + ", " +
+                            entry.getKey().getLocation().getY());
+            for (Driver driver : entry.getValue()) {
+                System.out.println("Driver: " + driver.getLocation().getX() + ", " +
+                        driver.getLocation().getY());
+            }
+        }
+        System.out.println(currCustomer.getLocation().getX() + ", " + currCustomer.getLocation().getY());
         List<Driver> bestDrivers = driverSearch.getAllBestDrivers(currCustomer);
-
         List<int[]> bestDriversLocation = new ArrayList<>();
         for (Driver driver : bestDrivers) {
             bestDriversLocation.add(new int[] { (int) driver.getLocation().getX(), (int) driver.getLocation().getY() });

@@ -88,7 +88,7 @@ public class SignUpController {
 
         if (user.getRole() == Config.Role.DRIVER.toString()) {
             // create driver
-            Driver driver = new Driver(
+            Driver driver = new Driver(null,
                     randomLocation, Config.VehicleType.valueOf(vehicleType), currUser, 0,
                     0.0, 0.0);
             if (!driverRepository.create(driver))

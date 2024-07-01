@@ -13,12 +13,14 @@ public class Driver {
     }
 
     public Driver(
+            String id,
             Location location,
             Config.VehicleType vehicleType,
             User user,
             int rating,
             double revenue,
             double kilometers_driven) {
+        this.id = id;
         this.location = location;
         this.vehicleType = vehicleType;
         this.user = user;
