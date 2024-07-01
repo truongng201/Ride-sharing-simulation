@@ -605,11 +605,88 @@ public class GenMap {
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
             }
     };
-
+    
+    public static HashMap<Location, Location> modifiedLocation;
+    
     public static int[][] getMap() {
         return map;
     }
 
+    private static void findNearestOne() {
+    	modifiedLocation =  new HashMap<Location, Location>();
+    	HashMap<Location, Location> dp = new HashMap<Location, Location>();
+    	int rows = map.length;
+    	int cols = rows;
+    	dp.clear();
+    	for (int i = 0; i < rows; i++)
+    		for (int j = 0; j < cols; j++) {
+    			if (map[i][j] == 1) dp.put(new Location(i, j), new Location(i, j));
+    			else {
+    				//System.out.println(i + " " + j);
+    				Location p = new Location(i, j);
+    				dp.put(p, null);
+    				if (i >= 1) dp.put(p, dp.get(new Location(i - 1, j)));
+    				if (j >= 1 && (dp.get(p) == null) || (dp.get(new Location(i, j - 1)) != null 
+    						&& p.distanceTo(dp.get(p)) > p.distanceTo(dp.get(new Location(i, j - 1)))))
+    					dp.put(p, dp.get(new Location(i, j - 1)));
+    			}
+    		}
+    	for (Location p : dp.keySet())
+    	if (modifiedLocation.get(p) == null || p.distanceTo(modifiedLocation.get(p)) > p.distanceTo(dp.get(p)))
+    		modifiedLocation.put(p, dp.get(p).clone());
+    	
+    	dp.clear();
+    	for (int i = 0; i < rows; i++)
+    		for (int j = cols - 1; j >= 0; j--) {
+    			if (map[i][j] == 1) dp.put(new Location(i, j), new Location(i, j));
+    			else {
+    				Location p = new Location(i, j);
+    				dp.put(p, null);
+    				if (i >= 1) dp.put(p, dp.get(new Location(i - 1, j)));
+    				if (j < cols - 1 && (dp.get(p) == null) || (dp.get(new Location(i, j + 1)) != null 
+    						&& p.distanceTo(dp.get(p)) > p.distanceTo(dp.get(new Location(i, j + 1)))))
+    					dp.put(p, dp.get(new Location(i, j + 1)));
+    			}
+    		}
+    	for (Location p : dp.keySet())
+    	if (modifiedLocation.get(p) == null || p.distanceTo(modifiedLocation.get(p)) > p.distanceTo(dp.get(p)))
+    		modifiedLocation.put(p, dp.get(p).clone());
+    	
+    	dp.clear();
+    	for (int i = rows - 1; i >= 0; i--)
+    		for (int j = cols - 1; j >= 0; j--) {
+    			if (map[i][j] == 1) dp.put(new Location(i, j), new Location(i, j));
+    			else {
+    				Location p = new Location(i, j);
+    				dp.put(p, null);
+    				if (i < rows - 1) dp.put(p, dp.get(new Location(i + 1, j)));
+    				if (j < cols - 1 && (dp.get(p) == null) || (dp.get(new Location(i, j + 1)) != null 
+    						&& p.distanceTo(dp.get(p)) > p.distanceTo(dp.get(new Location(i, j + 1)))))
+    					dp.put(p, dp.get(new Location(i, j + 1)));
+    			}
+    		}
+    	for (Location p : dp.keySet())
+    	if (modifiedLocation.get(p) == null || p.distanceTo(modifiedLocation.get(p)) > p.distanceTo(dp.get(p)))
+    		modifiedLocation.put(p, dp.get(p).clone());
+    	
+    	dp.clear();
+    	for (int i = rows - 1; i >= 0; i--)
+    		for (int j = 0; j < cols; j++) {
+    			if (map[i][j] == 1) dp.put(new Location(i, j), new Location(i, j));
+    			else {
+    				Location p = new Location(i, j);
+    				dp.put(p, null);
+    				if (i < rows - 1) dp.put(p, dp.get(new Location(i + 1, j)));
+    				if (j >= 1 && (dp.get(p) == null) || (dp.get(new Location(i, j - 1)) != null 
+    						&& p.distanceTo(dp.get(p)) > p.distanceTo(dp.get(new Location(i, j - 1)))))
+    					dp.put(p, dp.get(new Location(i, j - 1)));
+    			}
+    		}
+    	for (Location p : dp.keySet())
+    	if (modifiedLocation.get(p) == null || p.distanceTo(modifiedLocation.get(p)) > p.distanceTo(dp.get(p)))
+    		modifiedLocation.put(p, dp.get(p).clone());
+    	
+    }
     public static void genGraph() {
         int rows = map.length;
         for (int i = 0; i < rows; i++) {
@@ -627,5 +704,6 @@ public class GenMap {
                 }
             }
         }
+        findNearestOne();
     }
 }
