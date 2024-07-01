@@ -20,13 +20,13 @@ import me.truongng.journeymapapi.models.User;
 import me.truongng.journeymapapi.utils.exception.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 public class GetUserInfoController {
     @Autowired
     private UserRepository userRepository;
     private static final Logger log = LoggerFactory.getLogger(GetUserInfoController.class);
 
-    @GetMapping("/user/:id")
+    @GetMapping("/:id")
     public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable("id") String id) {
         log.info("Getting user info for user with id: " + id);
         List<User> users = userRepository.findById(id);

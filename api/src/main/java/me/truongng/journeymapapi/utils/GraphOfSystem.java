@@ -9,8 +9,14 @@ public class GraphOfSystem {
     static HashMap<Location, ArrayList<Location>> adj = new HashMap<Location, ArrayList<Location>>();
 
     public static void addUnDirectedEdge(Location from, Location to) {
-        // đường 1 chiều
+        if (!adj.containsKey(from)) {
+            adj.put(from, new ArrayList<>());
+        }
+        if (!adj.containsKey(to)) {
+            adj.put(to, new ArrayList<>());
+        }
         adj.get(from).add(to);
+        adj.get(to).add(from); // Since it's undirected
     }
 
     // ToP là danh sách những Location có đường nối tới P

@@ -16,11 +16,11 @@ import java.util.*;
 
 import me.truongng.journeymapapi.models.Location;
 
-public class DeliveryJourney {
+public class Journey {
     Location DriverLocation; // luôn bắt đầu tại DriverLocation(chỗ tổng kho nhận hàng, lấy hàng ở tổng kho
                              // xong đi giao cho bọn kia)
 
-    public DeliveryJourney(Location DriverLocation) {
+    public Journey(Location DriverLocation) {
         this.DriverLocation = DriverLocation;
     }
 
@@ -203,7 +203,7 @@ public class DeliveryJourney {
     // setOfLocations.add(new Location(0, 5));
     // setOfLocations.add(new Location(1, 5));
     // setOfLocations.add(new Location(3, 5));
-    // DeliveryJourney Journey = new DeliveryJourney(new Location(0, 0));
+    // Journey Journey = new Journey(new Location(0, 0));
     // ArrayList<Location> Order = Journey.OrderOfLocations(setOfLocations);
     // for (Location p : Order)
     // System.out.println(p.getLatitude() + " " + p.getLongitude());
