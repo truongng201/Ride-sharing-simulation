@@ -46,7 +46,6 @@ public class GetShortestPathController {
         ArrayList<Location> Order = Journey.OrderOfLocations(new ArrayList<>() {
             {
                 add(new Location(desX, desY));
-                add(new Location(10.0, 10.0));
             }
 
         });
