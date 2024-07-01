@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import me.truongng.journeymapapi.utils.DriverSearch;
+import me.truongng.journeymapapi.utils.KMeansClustering;
 import me.truongng.journeymapapi.utils.ResponseHandler;
 import me.truongng.journeymapapi.validation.BookDriveValidation;
 import me.truongng.journeymapapi.models.Location;
 import me.truongng.journeymapapi.models.Ride;
 import me.truongng.journeymapapi.models.Config.RideStatus;
 import me.truongng.journeymapapi.models.Customer;
+import me.truongng.journeymapapi.models.Driver;
 import me.truongng.journeymapapi.repository.CustomerRepository;
 import me.truongng.journeymapapi.repository.RideRepository;
+import me.truongng.journeymapapi.repository.DriverRepository;
 import me.truongng.journeymapapi.utils.exception.InternalServerErrorException;
 import me.truongng.journeymapapi.utils.exception.NotFoundException;
 
@@ -31,6 +35,8 @@ public class BookDriveController {
     private CustomerRepository customerRepository;
     @Autowired
     private RideRepository rideRepository;
+    @Autowired
+    private DriverRepository driverRepository;
     @Autowired
     private BookDriveValidation bookDriveValidation;
 
@@ -50,14 +56,26 @@ public class BookDriveController {
         List<Customer> customers = customerRepository.findById(customerID);
         if (customers.size() == 0)
             throw new NotFoundException("Customer not found");
+        Customer currCustomer = customers.get(0);
+        currCustomer.setId(customerID);
 
-        Double currX = customers.get(0).getLocation().getX();
-        Double currY = customers.get(0).getLocation().getY();
+        Double currX = currCustomer.getLocation().getX();
+        Double currY = currCustomer.getLocation().getY();
         Double desX = Double.parseDouble(endX);
         Double desY = Double.parseDouble(endY);
 
-        customers.get(0).setId(customerID);
-        Ride ride = new Ride(customers.get(0), null, new Location(currX, currY), new Location(desX, desY),
+        List<Driver> drivers = driverRepository.getAllDriverNotRunning();
+
+        int numberOfClusters = 3;
+        KMeansClustering kMeans = new KMeansClustering(numberOfClusters, drivers);
+        kMeans.run(100, 0.01);
+        Map<Driver, List<Driver>> clusters = kMeans.getClusters();
+        DriverSearch driverSearch = new DriverSearch(clusters);
+
+        Driver bestDriver = driverSearch.findBestDriver(currCustomer);
+
+        Ride ride = new Ride(currCustomer,
+                bestDriver, new Location(currX, currY), new Location(desX, desY),
                 RideStatus.REQUESTED, 0, 0);
 
         if (!rideRepository.create(ride))

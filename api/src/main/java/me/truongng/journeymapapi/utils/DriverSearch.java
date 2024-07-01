@@ -65,6 +65,26 @@ public class DriverSearch {
         return clusterings.get(nearestCentroids).pollFirst();
     }
 
+    public List<Driver> getAllBestDrivers(Customer customer) {
+        // tìm tài xế tối ưu cho khách hàng
+        Driver nearestCentroids = new Driver();
+        for (Driver centroids : clusterings.keySet()) {
+            if (nearestCentroids == null ||
+                    centroids.getLocation().distanceTo(customer.getLocation()) < nearestCentroids.getLocation()
+                            .distanceTo(customer.getLocation()))
+                nearestCentroids = centroids;
+        }
+        // nếu trong clusterings không có thằng nào tức là không tìm được tài xế ở xung
+        // quanh nó --> trả về null
+        if (clusterings.isEmpty())
+            return new ArrayList<>();
+        List<Driver> res = new ArrayList<>();
+        for (Driver driver : clusterings.get(nearestCentroids)) {
+            res.add(driver);
+        }
+        return res;
+    }
+
     // public static void main(String[] args) {
     // List<Driver> Drivers = Arrays.asList(
     // new Driver(new Location(1, 1)),

@@ -37,6 +37,11 @@ public class Location {
     }
 
     @Override
+    public Location clone() {
+        return new Location(X, Y);
+    }
+
+    @Override
     public boolean equals(Object newObject) {
         if (this == newObject)
             return true; // cùng 1 object, hoặc cùng rỗng
