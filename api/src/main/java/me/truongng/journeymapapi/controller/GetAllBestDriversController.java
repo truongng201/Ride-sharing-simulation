@@ -48,23 +48,11 @@ public class GetAllBestDriversController {
 
         List<Driver> drivers = driverRepository.getAllDriverNotRunning();
 
-        int numberOfClusters = 3;
-        KMeansClustering kMeans = new KMeansClustering(numberOfClusters, drivers);
-        kMeans.run(100, 0.01);
-        Map<Driver, List<Driver>> clusters = kMeans.getClusters();
-
+        double maxClusterDistance = 30;
+        KMeansClustering kMeans = new KMeansClustering(3, drivers);
+        Map<Driver, List<Driver>> clusters = kMeans.getClusters(maxClusterDistance);
         DriverSearch driverSearch = new DriverSearch(clusters);
 
-        for (Map.Entry<Driver, List<Driver>> entry : clusters.entrySet()) {
-            System.out.println(
-                    "Centroid: " + entry.getKey().getLocation().getX() + ", " +
-                            entry.getKey().getLocation().getY());
-            for (Driver driver : entry.getValue()) {
-                System.out.println("Driver: " + driver.getLocation().getX() + ", " +
-                        driver.getLocation().getY());
-            }
-        }
-        System.out.println(currCustomer.getLocation().getX() + ", " + currCustomer.getLocation().getY());
         List<Driver> bestDrivers = driverSearch.getAllBestDrivers(currCustomer);
         List<int[]> bestDriversLocation = new ArrayList<>();
         for (Driver driver : bestDrivers) {

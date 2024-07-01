@@ -66,10 +66,9 @@ public class BookDriveController {
 
         List<Driver> drivers = driverRepository.getAllDriverNotRunning();
 
-        int numberOfClusters = 3;
-        KMeansClustering kMeans = new KMeansClustering(numberOfClusters, drivers);
-        kMeans.run(100, 0.01);
-        Map<Driver, List<Driver>> clusters = kMeans.getClusters();
+        double maxClusterDistance = 30;
+        KMeansClustering kMeans = new KMeansClustering(3, drivers);
+        Map<Driver, List<Driver>> clusters = kMeans.getClusters(maxClusterDistance);
         DriverSearch driverSearch = new DriverSearch(clusters);
 
         Driver bestDriver = driverSearch.findBestDriver(currCustomer);
