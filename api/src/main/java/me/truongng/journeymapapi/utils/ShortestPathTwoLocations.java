@@ -28,7 +28,7 @@ class Dijkstra {
         }
     }
 
-    static double get(Location From, Location To) {
+    static double getDistance(Location From, Location To) {
         dist = new HashMap<Location, Double>();
         PriorityQueue<Data> pq = new PriorityQueue<Data>();
         dist.put(From, 0.0);
@@ -51,6 +51,42 @@ class Dijkstra {
         }
         return Double.MAX_VALUE; // don't have path from : From ---> To
     }
+
+    static List<Location> getPath(Location From, Location To) {
+		dist = new HashMap<Location, Double>();
+		PriorityQueue<Data> pq = new PriorityQueue<Data>();
+		HashMap<Location, Location> trace = new HashMap<Location, Location>();
+		dist.put(From, 0.0);
+		pq.offer(new Data(From, 0));
+		while (!pq.isEmpty()) {
+			Data x = pq.poll();
+			if (x.dist != dist.get(x.u))
+				continue;
+			if (x.u.equals(To))
+				break;
+			
+			if (GraphOfSystem.adj.containsKey(x.u)) {
+				for (Location v: GraphOfSystem.adj.get(x.u)){
+					if (!dist.containsKey(v) || dist.get(v) > x.dist + x.u.distanceTo(v)) {
+						dist.put(v,  x.dist + x.u.distanceTo(v));
+						trace.put(v, x.u);
+						pq.offer(new Data(v, dist.get(v)));
+					}
+				}
+			}
+		}
+		Stack<Location> st = new Stack<Location>();
+		Location u = To;
+		while (!u.equals(From)){
+			st.push(u);
+			u = trace.get(u);
+		}
+		st.push(From);
+		List<Location> paths = new ArrayList<Location>();
+		while (st.size() > 0)
+			paths.add(st.pop());
+		return paths;
+	}
 }
 
 // còn thời gian thì implement
@@ -61,9 +97,12 @@ class DEsopoPape {
 public class ShortestPathTwoLocations {
 
     static public double getDistance(Location From, Location To) {
-        return Dijkstra.get(From, To);
-
+        return Dijkstra.getDistance(From, To);
     }
+
+    static public List<Location> getPath(Location From, Location To){
+		return Dijkstra.getPath(From, To);
+	}
 
     // public static void main(String[] args) {
     //     // testing
