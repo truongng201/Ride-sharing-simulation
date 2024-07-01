@@ -111,6 +111,42 @@ public class KMeansClustering {
         return clusters;
     }
 
+    public boolean checkDistanceLimit(double distanceLimit) {
+        for (Map.Entry<Driver, List<Driver>> entry : clusters.entrySet()) {
+            Driver centroid = entry.getKey();
+            for (Driver driver : entry.getValue()) {
+                if (calculateDistance(centroid, driver) > distanceLimit) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    // BinarySearch to Find KMeanClusterings with limit Distance
+    public Map<Driver, List<Driver>> getClusters(double distanceLimit){
+    	int minK = 1;
+    	int maxK = drivers.size();
+    	int optimalK = -1;
+    	KMeansClustering kMeans = null;
+    	
+    	while (minK <= maxK) {
+            int midK = (minK + maxK) / 2;
+            kMeans = new KMeansClustering(midK, drivers);
+            kMeans.run(100, 0.01);
+
+            if (kMeans.checkDistanceLimit(distanceLimit)) {
+                optimalK = midK;
+                maxK = midK - 1;
+            } else {
+                minK = midK + 1;
+            }
+    	}
+        kMeans = new KMeansClustering(optimalK, drivers);
+        kMeans.run(100, 0.01);
+        return kMeans.clusters;
+    }
+ 
     // public static void main(String[] args) {
     // List<Driver> drivers = Arrays.asList(
     // new Driver(new Location(1, 1)),
