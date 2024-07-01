@@ -28,9 +28,9 @@ public class Driver {
     }
 
     public Driver(Location location) {
-    	this.location = location;
+        this.location = location;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -93,7 +93,7 @@ public class Driver {
         this.revenue = revenue;
     }
 
-    public double getKilometers_driven() {
+    public double getKilometersDriven() {
         return kilometers_driven;
     }
 

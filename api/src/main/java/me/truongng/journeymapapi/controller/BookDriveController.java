@@ -12,7 +12,7 @@ import me.truongng.journeymapapi.utils.ResponseHandler;
 
 @RestController
 @RequestMapping("/book-drive")
-public class BookDrive {
+public class BookDriveController {
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> bookDrive() {
         return ResponseHandler.responseBuilder(HttpStatus.OK, "Book Drive API is hit");

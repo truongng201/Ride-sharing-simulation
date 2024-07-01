@@ -3,37 +3,37 @@ package me.truongng.journeymapapi.models;
 import java.util.Objects;
 
 public class Location {
-    private double latitude;
-    private double longitude;
+    private double X;
+    private double Y;
 
     public Location() {
     }
 
-    public Location(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Location(double X, double Y) {
+        this.X = X;
+        this.Y = Y;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public double getX() {
+        return X;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setX(double X) {
+        this.X = X;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public double getY() {
+        return Y;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setY(double Y) {
+        this.Y = Y;
     }
 
     public double distanceTo(Location newLocation) {
         return Math.sqrt(
-                (longitude - newLocation.longitude) * (longitude - newLocation.longitude)
-                        + (latitude - newLocation.latitude) * (latitude - newLocation.latitude));
+                (Y - newLocation.Y) * (Y - newLocation.Y)
+                        + (X - newLocation.X) * (X - newLocation.X));
     }
 
     @Override
@@ -43,20 +43,20 @@ public class Location {
         if (newObject == null || getClass() != newObject.getClass())
             return false; // 1 cái rỗng hoặc khác loại class
         Location newLocation = (Location) newObject;
-        return Double.compare(newLocation.latitude, latitude) == 0
-                && Double.compare(newLocation.longitude, longitude) == 0;
+        return Double.compare(newLocation.X, X) == 0
+                && Double.compare(newLocation.Y, Y) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(latitude, longitude); // hashCode theo giá trị
+        return Objects.hash(X, Y); // hashCode theo giá trị
     }
 
     @Override
     public String toString() {
         return "Location{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
+                "X=" + X +
+                ", Y=" + Y +
                 '}';
     }
 }

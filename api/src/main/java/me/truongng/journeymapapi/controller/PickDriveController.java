@@ -12,7 +12,7 @@ import me.truongng.journeymapapi.utils.ResponseHandler;
 
 @RestController
 @RequestMapping("/pick-drive")
-public class PickDrive {
+public class PickDriveController {
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> pickDrive() {
         return ResponseHandler.responseBuilder(HttpStatus.OK, "Pick Drive API is hit");
