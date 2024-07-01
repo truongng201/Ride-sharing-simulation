@@ -26,7 +26,7 @@ public class GetUserInfoController {
     private UserRepository userRepository;
     private static final Logger log = LoggerFactory.getLogger(GetUserInfoController.class);
 
-    @GetMapping("/:id")
+    @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable("id") String id) {
         log.info("Getting user info for user with id: " + id);
         List<User> users = userRepository.findById(id);

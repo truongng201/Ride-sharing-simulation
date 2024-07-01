@@ -15,11 +15,12 @@ public class RideRepository implements RideRespositoryInterface {
     public boolean create(Ride ride) {
         int res = jdbcTemplate.update(
                 "INSERT INTO rides (customer_id, driver_id, start_x, start_y, end_x, end_y, status, fare) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                ride.getCustomer().getId(),
-                ride.getDriver().getId(),
+                Integer.parseInt(ride.getCustomer().getId()),
+                ride.getDriver() == null ? 1 : Integer.parseInt(ride.getDriver().getId()), // 1 is admin
                 ride.getPickupLocation().getX(),
                 ride.getPickupLocation().getY(),
                 ride.getDropoffLocation().getX(),
+                ride.getDropoffLocation().getY(),
                 ride.getStatus(),
                 ride.getFare());
         return res == 1 ? true : false;

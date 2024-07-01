@@ -18,7 +18,6 @@ import me.truongng.journeymapapi.utils.exception.BadRequestException;
 import me.truongng.journeymapapi.models.Location;
 import me.truongng.journeymapapi.utils.GenMap;
 import me.truongng.journeymapapi.utils.Journey;
-import me.truongng.journeymapapi.utils.GraphOfSystem;
 
 @RestController
 @RequestMapping("/get-shortest-path")
