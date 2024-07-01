@@ -1,6 +1,7 @@
 package me.truongng.journeymapapi.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import me.truongng.journeymapapi.utils.ResponseHandler;
+import me.truongng.journeymapapi.utils.ShortestPathTwoLocations;
 import me.truongng.journeymapapi.utils.exception.BadRequestException;
 import me.truongng.journeymapapi.models.Location;
 import me.truongng.journeymapapi.utils.GenMap;
-import me.truongng.journeymapapi.utils.Journey;
 
 @RestController
 @RequestMapping("/get-shortest-path")
@@ -40,18 +41,12 @@ public class GetShortestPathController {
         Double currY = Double.parseDouble(startY);
         Double desX = Double.parseDouble(endX);
         Double desY = Double.parseDouble(endY);
-
-        Journey Journey = new Journey(new Location(currX, currY));
         GenMap.genGraph();
-        ArrayList<Location> Order = Journey.OrderOfLocations(new ArrayList<>() {
-            {
-                add(new Location(desX, desY));
-            }
-
-        });
-        for (Location p : Order) {
-            System.out.println(p.getX() + " " + p.getY());
+        List<Location> paths = ShortestPathTwoLocations.getPath(new Location(currX, currY), new Location(desX, desY));
+        List<int[]> res = new ArrayList<>();
+        for (Location loc : paths) {
+            res.add(new int[] { (int) loc.getX(), (int) loc.getY() });
         }
-        return ResponseHandler.responseBuilder(HttpStatus.OK, "Get Shortest Path API is hit");
+        return ResponseHandler.responseBuilder(HttpStatus.OK, res);
     }
 }

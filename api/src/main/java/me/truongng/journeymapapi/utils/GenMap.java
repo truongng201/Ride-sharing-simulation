@@ -614,6 +614,8 @@ public class GenMap {
         int rows = map.length;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j] == 0)
+                    System.out.println("i: " + i + " j: " + j);
                 if (map[i][j] == 1) {
                     if (j + 1 < map[i].length && map[i][j + 1] == 1) {
                         GraphOfSystem.addUnDirectedEdge(new Location(i, j),
