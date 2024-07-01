@@ -14,6 +14,7 @@ public class Ride {
     }
 
     public Ride(
+            String id,
             Customer customer,
             Driver driver,
             Location pickupLocation,
@@ -21,6 +22,7 @@ public class Ride {
             Config.RideStatus status,
             double fare,
             double distance) {
+        this.id = id;
         this.customer = customer;
         this.driver = driver;
         this.pickupLocation = pickupLocation;

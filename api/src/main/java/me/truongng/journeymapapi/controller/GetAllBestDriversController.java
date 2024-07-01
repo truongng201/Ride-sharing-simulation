@@ -24,14 +24,14 @@ import me.truongng.journeymapapi.repository.DriverRepository;
 import me.truongng.journeymapapi.utils.exception.NotFoundException;
 
 @RestController
-@RequestMapping("/get-all-best-drivers")
+@RequestMapping("/all-best-drivers")
 public class GetAllBestDriversController {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private DriverRepository driverRepository;
 
-    private Logger log = LoggerFactory.getLogger(BookDriveController.class);
+    private Logger log = LoggerFactory.getLogger(GetAllBestDriversController.class);
 
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> getAll(@RequestParam String customerID) {

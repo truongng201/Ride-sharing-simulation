@@ -21,18 +21,18 @@ import me.truongng.journeymapapi.models.Location;
 import me.truongng.journeymapapi.utils.GenMap;
 
 @RestController
-@RequestMapping("/get-shortest-path")
-public class GetShortestPathController {
-    private Logger log = LoggerFactory.getLogger(GetShortestPathController.class);
+@RequestMapping("/find-shortest-path")
+public class FindShortestPathController {
+    private Logger log = LoggerFactory.getLogger(FindShortestPathController.class);
 
     @PostMapping("")
-    public ResponseEntity<Map<String, Object>> getShortestPath(@RequestBody Map<String, String> body) {
+    public ResponseEntity<Map<String, Object>> FindShortestPath(@RequestBody Map<String, String> body) {
         String startX = body.getOrDefault("startX", null);
         String startY = body.getOrDefault("startY", null);
         String endX = body.getOrDefault("endX", null);
         String endY = body.getOrDefault("endY", null);
 
-        log.info("GetShortestPathController.request_payload: " + startX + " " + startY + " " + endX + " " + endY);
+        log.info("FindShortestPathController.request_payload: " + startX + " " + startY + " " + endX + " " + endY);
 
         if (startX == null || startY == null || endX == null || endY == null)
             throw new BadRequestException("Missing required fields");

@@ -33,6 +33,10 @@ public class Driver {
         this.location = location;
     }
 
+    public Driver(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

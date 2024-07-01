@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import me.truongng.journeymapapi.utils.DriverSearch;
 import me.truongng.journeymapapi.utils.KMeansClustering;
 import me.truongng.journeymapapi.utils.ResponseHandler;
-import me.truongng.journeymapapi.validation.BookDriveValidation;
+import me.truongng.journeymapapi.validation.CreateRideValidation;
 import me.truongng.journeymapapi.models.Location;
 import me.truongng.journeymapapi.models.Ride;
 import me.truongng.journeymapapi.models.Config.RideStatus;
@@ -29,8 +29,8 @@ import me.truongng.journeymapapi.utils.exception.InternalServerErrorException;
 import me.truongng.journeymapapi.utils.exception.NotFoundException;
 
 @RestController
-@RequestMapping("/book-drive")
-public class BookDriveController {
+@RequestMapping("/create-ride")
+public class CreateRideController {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -38,20 +38,20 @@ public class BookDriveController {
     @Autowired
     private DriverRepository driverRepository;
     @Autowired
-    private BookDriveValidation bookDriveValidation;
+    private CreateRideValidation CreateRideValidation;
 
-    private Logger log = LoggerFactory.getLogger(BookDriveController.class);
+    private Logger log = LoggerFactory.getLogger(CreateRideController.class);
 
     @PostMapping("")
-    public ResponseEntity<Map<String, Object>> bookDrive(@RequestBody Map<String, String> body) {
+    public ResponseEntity<Map<String, Object>> CreateRide(@RequestBody Map<String, String> body) {
         String endX = body.getOrDefault("end_x", null);
         String endY = body.getOrDefault("end_y", null);
         String customerID = body.getOrDefault("customer_id", null);
 
-        log.info("BookDriveController.request_payload: " + " " + endX + " " + endY + " "
+        log.info("CreateRideController.request_payload: " + " " + endX + " " + endY + " "
                 + customerID);
 
-        bookDriveValidation.validate(endX, endY, customerID);
+        CreateRideValidation.validate(endX, endY, customerID);
 
         List<Customer> customers = customerRepository.findById(customerID);
         if (customers.size() == 0)
@@ -73,7 +73,7 @@ public class BookDriveController {
 
         Driver bestDriver = driverSearch.findBestDriver(currCustomer);
         System.out.println("Best driver: " + bestDriver);
-        Ride ride = new Ride(currCustomer,
+        Ride ride = new Ride(null, currCustomer,
                 bestDriver, new Location(currX, currY), new Location(desX, desY),
                 RideStatus.REQUESTED, 0, 0);
 

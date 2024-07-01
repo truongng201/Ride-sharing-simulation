@@ -57,7 +57,7 @@ public class UserRepository implements UserRepositoryInterface {
                         rs.getString("image_url"),
                         rs.getBoolean("is_verified"),
                         Config.Role.valueOf(rs.getString("role"))),
-                id);
+                Integer.parseInt(id));
     }
 
     @Override

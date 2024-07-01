@@ -8,6 +8,8 @@ public interface RideRespositoryInterface {
     boolean create(Ride ride);
 
     boolean update(Ride ride);
-    
-    List<Ride> getRidesByStatus(String status);
-} 
+
+    List<Ride> getRidesByDriverId(String driverId);
+
+    List<Ride> findById(String rideId);
+}

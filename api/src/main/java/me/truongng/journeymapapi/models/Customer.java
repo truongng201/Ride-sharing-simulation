@@ -13,6 +13,10 @@ public class Customer {
         this.location = location;
     }
 
+    public Customer(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

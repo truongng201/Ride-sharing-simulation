@@ -12,7 +12,7 @@ import me.truongng.journeymapapi.utils.ResponseHandler;
 import me.truongng.journeymapapi.utils.GenMap;
 
 @RestController
-@RequestMapping("/get-map")
+@RequestMapping("/map")
 public class GetMapController {
 
     @GetMapping("")
