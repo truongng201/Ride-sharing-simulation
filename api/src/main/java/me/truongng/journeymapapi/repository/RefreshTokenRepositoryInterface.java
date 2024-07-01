@@ -5,7 +5,7 @@ import java.util.List;
 import me.truongng.journeymapapi.models.RefreshToken;
 
 public interface RefreshTokenRepositoryInterface {
-    boolean create(RefreshToken user);
+    boolean create(RefreshToken refreshToken);
 
     List<RefreshToken> findByToken(String id);
 

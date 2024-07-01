@@ -65,17 +65,17 @@ public class ShortestPathTwoLocations {
 
     }
 
-    public static void main(String[] args) {
-        // testing
-        // new GraphOfSystem(); // init new GraphOfSystem() --> đầu chương trình khởi
-        // tạo cho nó phát
-        GraphOfSystem.addLocationToMap(new Location(0, 1), null, null);
-        GraphOfSystem.addLocationToMap(new Location(0, 2), null, null);
-        GraphOfSystem.addLocationToMap(new Location(0, 5), new ArrayList<Location>(Arrays.asList(new Location(0, 1))),
-                new ArrayList<Location>(Arrays.asList(new Location(0, 2))));
-        GraphOfSystem.addLocationToMap(new Location(0, 4), new ArrayList<Location>(Arrays.asList(new Location(0, 1))),
-                new ArrayList<Location>(Arrays.asList(new Location(0, 2))));
-        System.out.println(getDistance(new Location(0, 1), new Location(0, 2)));
-    }
+    // public static void main(String[] args) {
+    //     // testing
+    //     // new GraphOfSystem(); // init new GraphOfSystem() --> đầu chương trình khởi
+    //     // tạo cho nó phát
+    //     GraphOfSystem.addLocationToMap(new Location(0, 1), null, null);
+    //     GraphOfSystem.addLocationToMap(new Location(0, 2), null, null);
+    //     GraphOfSystem.addLocationToMap(new Location(0, 5), new ArrayList<Location>(Arrays.asList(new Location(0, 1))),
+    //             new ArrayList<Location>(Arrays.asList(new Location(0, 2))));
+    //     GraphOfSystem.addLocationToMap(new Location(0, 4), new ArrayList<Location>(Arrays.asList(new Location(0, 1))),
+    //             new ArrayList<Location>(Arrays.asList(new Location(0, 2))));
+    //     System.out.println(getDistance(new Location(0, 1), new Location(0, 2)));
+    // }
 
 }

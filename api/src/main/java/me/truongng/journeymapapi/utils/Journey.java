@@ -177,35 +177,12 @@ public class Journey {
     }
 
     // public static void main(String[] args) {
-    // // testing
-    // // for (int i = 1; i <= 10; i++) System.out.println(10);
-    // GraphOfSystem.addLocationToMap(new Location(0, 0), null, null);
-    // GraphOfSystem.addLocationToMap(new Location(1, 0), null, null);
-    // GraphOfSystem.addLocationToMap(new Location(0, 5), null, null);
-    // GraphOfSystem.addLocationToMap(new Location(1, 5), null, null);
-    // GraphOfSystem.addLocationToMap(new Location(3, 5), null, null);
-
-    // GraphOfSystem.addUnDirectedEdge(new Location(0, 0), new Location(1, 0));
-    // GraphOfSystem.addUnDirectedEdge(new Location(0, 0), new Location(0, 5));
-    // GraphOfSystem.addUnDirectedEdge(new Location(1, 0), new Location(0, 5));
-
-    // GraphOfSystem.addUnDirectedEdge(new Location(0, 0), new Location(1, 5));
-    // GraphOfSystem.addUnDirectedEdge(new Location(1, 0), new Location(1, 5));
-    // GraphOfSystem.addUnDirectedEdge(new Location(0, 5), new Location(1, 5));
-
-    // GraphOfSystem.addUnDirectedEdge(new Location(0, 0), new Location(3, 5));
-    // GraphOfSystem.addUnDirectedEdge(new Location(1, 0), new Location(3, 5));
-    // GraphOfSystem.addUnDirectedEdge(new Location(0, 5), new Location(3, 5));
-    // GraphOfSystem.addUnDirectedEdge(new Location(1, 5), new Location(3, 5));
-
+    // GenMap.genGraph();
     // ArrayList<Location> setOfLocations = new ArrayList<Location>();
-    // setOfLocations.add(new Location(1, 0));
-    // setOfLocations.add(new Location(0, 5));
-    // setOfLocations.add(new Location(1, 5));
-    // setOfLocations.add(new Location(3, 5));
+    // setOfLocations.add(new Location(8, 6));
     // Journey Journey = new Journey(new Location(0, 0));
     // ArrayList<Location> Order = Journey.OrderOfLocations(setOfLocations);
     // for (Location p : Order)
-    // System.out.println(p.getLatitude() + " " + p.getLongitude());
+    // System.out.println(p.getX() + " " + p.getY());
     // }
 }

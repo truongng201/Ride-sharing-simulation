@@ -1,4 +1,4 @@
-package main.java.me.truongng.journeymapapi.utils;
+package me.truongng.journeymapapi.utils;
 
 import java.util.*;
 

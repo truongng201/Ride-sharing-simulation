@@ -10,7 +10,6 @@ import java.util.*;
 */
 
 import me.truongng.journeymapapi.models.Driver;
-import me.truongng.journeymapapi.models.Location;
 import me.truongng.journeymapapi.models.Customer;
 
 public class DriverSearch {

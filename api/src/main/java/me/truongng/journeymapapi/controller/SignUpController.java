@@ -15,9 +15,15 @@ import java.util.Map;
 
 import me.truongng.journeymapapi.models.User;
 import me.truongng.journeymapapi.models.Config;
+import me.truongng.journeymapapi.models.Customer;
+import me.truongng.journeymapapi.models.Driver;
+import me.truongng.journeymapapi.models.Location;
 import me.truongng.journeymapapi.repository.UserRepository;
+import me.truongng.journeymapapi.repository.CustomerRepository;
+import me.truongng.journeymapapi.repository.DriverRepository;
 import me.truongng.journeymapapi.utils.ResponseHandler;
 import me.truongng.journeymapapi.utils.PasswordHasher;
+import me.truongng.journeymapapi.utils.RandomLocationGen;
 import me.truongng.journeymapapi.utils.exception.*;
 import me.truongng.journeymapapi.validation.SignUpValidation;
 
@@ -26,6 +32,11 @@ import me.truongng.journeymapapi.validation.SignUpValidation;
 public class SignUpController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private DriverRepository driverRepository;
+
     @Autowired
     private SignUpValidation signUpValidation;
 
@@ -37,10 +48,12 @@ public class SignUpController {
         String password = body.getOrDefault("password", null);
         String username = body.getOrDefault("username", null);
         String role = body.getOrDefault("role", null);
+        String vehicleType = body.getOrDefault("vehicle_type", null);
 
-        log.info("SignUpController.request_payload: " + email + " " + password + " " + username + " " + role);
+        log.info("SignUpController.request_payload: " + email + " " + password + " " + username + " " + role + " "
+                + vehicleType);
 
-        signUpValidation.validate(email, password, username, role);
+        signUpValidation.validate(email, password, username, role, vehicleType);
 
         List<User> users = userRepository.findByEmail(email);
         if (users.size() > 0)
@@ -56,19 +69,30 @@ public class SignUpController {
                 null,
                 false,
                 Config.Role.valueOf(role));
+        if (user.getRole() == Config.Role.ADMIN.toString())
+            throw new ForbiddenException("Admin cannot be created");
 
         if (!userRepository.create(user))
             throw new InternalServerErrorException("Failed to create user");
 
-        if (user.getRole() == Config.Role.ADMIN.toString())
-            throw new ForbiddenException("Admin cannot be created");
+        User currUser = userRepository.findByEmail(email).get(0);
+
+        Location randomLocation = RandomLocationGen.generateRandomLocation();
 
         if (user.getRole() == Config.Role.CUSTOMER.toString()) {
             // create customer
+            Customer customer = new Customer(currUser, randomLocation);
+            if (!customerRepository.create(customer))
+                throw new InternalServerErrorException("Failed to create customer");
         }
 
         if (user.getRole() == Config.Role.DRIVER.toString()) {
             // create driver
+            Driver driver = new Driver(
+                    randomLocation, Config.VehicleType.valueOf(vehicleType), currUser, 0,
+                    0.0, 0.0);
+            if (!driverRepository.create(driver))
+                throw new InternalServerErrorException("Failed to create driver");
         }
 
         return ResponseHandler.responseBuilder(HttpStatus.OK, "User created");

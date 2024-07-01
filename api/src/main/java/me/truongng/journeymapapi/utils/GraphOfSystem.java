@@ -6,7 +6,7 @@ import me.truongng.journeymapapi.models.Location;
 
 // lưu danh sách kề của đồ thị;
 public class GraphOfSystem {
-    static HashMap<Location, ArrayList<Location>> adj = new HashMap<Location, ArrayList<Location>>();
+    public static HashMap<Location, ArrayList<Location>> adj = new HashMap<Location, ArrayList<Location>>();
 
     public static void addUnDirectedEdge(Location from, Location to) {
         if (!adj.containsKey(from)) {

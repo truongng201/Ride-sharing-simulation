@@ -7,6 +7,8 @@ public class Ride {
     private Location pickupLocation;
     private Location dropoffLocation;
     private Config.RideStatus status;
+    private double fare;
+    private double distance;
 
     public Ride() {
     }
@@ -16,12 +18,16 @@ public class Ride {
             Driver driver,
             Location pickupLocation,
             Location dropoffLocation,
-            Config.RideStatus status) {
+            Config.RideStatus status,
+            double fare,
+            double distance) {
         this.customer = customer;
         this.driver = driver;
         this.pickupLocation = pickupLocation;
         this.dropoffLocation = dropoffLocation;
         this.status = status;
+        this.fare = fare;
+        this.distance = distance;
     }
 
     public String getId() {
@@ -92,6 +98,22 @@ public class Ride {
             default:
                 this.status = Config.RideStatus.REQUESTED;
         }
+    }
+
+    public double getFare() {
+        return fare;
+    }
+
+    public void setFare(double fare) {
+        this.fare = fare;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     @Override

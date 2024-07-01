@@ -7,7 +7,7 @@ import me.truongng.journeymapapi.models.Config;
 
 @Service
 public class SignUpValidation {
-    public void validate(String email, String password, String username, String role) {
+    public void validate(String email, String password, String username, String role, String vehicleType) {
         if (email == null || email.isEmpty()) {
             throw new BadRequestException("Email is required");
         }
@@ -44,8 +44,16 @@ public class SignUpValidation {
             throw new BadRequestException("Username must be at most 50 characters");
         }
 
-        // if (Config.isValidRole(role)) {
-        // throw new BadRequestException("Invalid role");
-        // }
+        if (!Config.isValidRole(role)) {
+            throw new BadRequestException("Invalid role");
+        }
+
+        if (role.equals("DRIVER") && (vehicleType == null || vehicleType.isEmpty())) {
+            throw new BadRequestException("Vehicle type is required");
+        }
+
+        if (role.equals("DRIVER") && !Config.isValidVehicleType(vehicleType)) {
+            throw new BadRequestException("Invalid vehicle type");
+        }
     }
 }

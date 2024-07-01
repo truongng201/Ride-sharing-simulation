@@ -73,8 +73,8 @@ public class Driver {
         }
     }
 
-    public String getUserId() {
-        return user.getId();
+    public Integer getUserId() {
+        return user == null ? null : Integer.parseInt(user.getId());
     }
 
     public int getRating() {
