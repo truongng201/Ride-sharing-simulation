@@ -29,15 +29,18 @@ public class KMeansClustering {
 
     // Initialize centroids
     private void initializeCentroids() {
-        Random random = new Random();
-        Set<Integer> selectedIndices = new HashSet<>();
-        while (selectedIndices.size() < k) {
-            int index = random.nextInt(drivers.size());
-            if (!selectedIndices.contains(index)) {
-                centroids.add(drivers.get(index));
-                selectedIndices.add(index);
-            }
+        // Random random = new Random();
+        for (int i = 0; i < k; i++) {
+            centroids.add(drivers.get(i));
         }
+        // Set<Integer> selectedIndices = new HashSet<>();
+        // while (selectedIndices.size() < k) {
+        // int index = random.nextInt(drivers.size());
+        // if (!selectedIndices.contains(index)) {
+        // centroids.add(drivers.get(index));
+        // selectedIndices.add(index);
+        // }
+        // }
     }
 
     // Calculate Euclidean distance
@@ -122,15 +125,15 @@ public class KMeansClustering {
         }
         return true;
     }
-    
+
     // BinarySearch to Find KMeanClusterings with limit Distance
-    public Map<Driver, List<Driver>> getClusters(double distanceLimit){
-    	int minK = 1;
-    	int maxK = drivers.size();
-    	int optimalK = -1;
-    	KMeansClustering kMeans = null;
-    	
-    	while (minK <= maxK) {
+    public Map<Driver, List<Driver>> getClusters(double distanceLimit) {
+        int minK = 1;
+        int maxK = drivers.size();
+        int optimalK = -1;
+        KMeansClustering kMeans = null;
+
+        while (minK <= maxK) {
             int midK = (minK + maxK) / 2;
             kMeans = new KMeansClustering(midK, drivers);
             kMeans.run(100, 0.01);
@@ -141,12 +144,12 @@ public class KMeansClustering {
             } else {
                 minK = midK + 1;
             }
-    	}
+        }
         kMeans = new KMeansClustering(optimalK, drivers);
         kMeans.run(100, 0.01);
         return kMeans.clusters;
     }
- 
+
     // public static void main(String[] args) {
     // List<Driver> drivers = Arrays.asList(
     // new Driver(new Location(1, 1)),
