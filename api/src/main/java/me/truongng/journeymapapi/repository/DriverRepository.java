@@ -73,4 +73,19 @@ public class DriverRepository implements DriverRespositoryInterface {
                         rs.getDouble("revenue"),
                         rs.getDouble("kilometers_driven")));
     }
+
+    @Override
+    public List<Driver> findByUserId(String userId) {
+        return jdbcTemplate.query(
+                "SELECT id, current_x, current_y, vehicle_type, rating, revenue, kilometers_driven FROM drivers WHERE user_id = ?",
+                (rs, rowNum) -> new Driver(
+                        rs.getString("id"),
+                        new Location(rs.getDouble("current_x"), rs.getDouble("current_y")),
+                        Config.VehicleType.valueOf(rs.getString("vehicle_type")),
+                        null,
+                        rs.getInt("rating"),
+                        rs.getDouble("revenue"),
+                        rs.getDouble("kilometers_driven")),
+                Integer.parseInt(userId));
+    }
 }

@@ -45,4 +45,15 @@ public class CustomerRepository implements CustomerRespositoryInterface {
                         new Location(rs.getInt("current_x"), rs.getInt("current_y"))),
                 Integer.parseInt(id));
     }
+
+    @Override
+    public List<Customer> findByUserId(String userId) {
+        return jdbcTemplate.query(
+                "SELECT id, current_x, current_y FROM customers WHERE user_id = ?",
+                (rs, rowNum) -> new Customer(
+                        null,
+                        new Location(rs.getInt("current_x"), rs.getInt("current_y"))),
+                Integer.parseInt(userId));
+    }
+
 }

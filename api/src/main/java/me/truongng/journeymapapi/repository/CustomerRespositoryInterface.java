@@ -10,4 +10,6 @@ public interface CustomerRespositoryInterface {
     boolean update(Customer customer);
 
     List<Customer> findById(String id);
+
+    List<Customer> findByUserId(String userId);
 }

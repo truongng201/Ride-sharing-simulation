@@ -66,7 +66,7 @@ public class SignUpController {
                 username,
                 email,
                 hashedPassword,
-                null,
+                "https://api.dicebear.com/6.x/bottts-neutral/svg?seed=" + email,
                 false,
                 Config.Role.valueOf(role));
         if (user.getRole() == Config.Role.ADMIN.toString())

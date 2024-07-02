@@ -12,4 +12,6 @@ public interface DriverRespositoryInterface {
     List<Driver> findById(String id);
 
     List<Driver> getAllDriverNotRunning();
+
+    List<Driver> findByUserId(String userId);
 }
