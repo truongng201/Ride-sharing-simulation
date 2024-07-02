@@ -80,7 +80,6 @@ public class CreateRideController {
         if (!rideRepository.create(ride))
             throw new InternalServerErrorException("Failed to book ride");
 
-        return ResponseHandler.responseBuilder(HttpStatus.OK,
-                "Successfully book a ride. Wait for driver to accept the ride");
+        return ResponseHandler.responseBuilder(HttpStatus.OK, bestDriver);
     }
 }

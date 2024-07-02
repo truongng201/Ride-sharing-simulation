@@ -27,10 +27,10 @@ export default function Home() {
     } else if (mode === "Public") {
       const newPickedCoordinates = [...pickedCoordinates];
       newPickedCoordinates.push([x, y]);
-      if (newPickedCoordinates.length <= 10) {
+      if (newPickedCoordinates.length <= 20) {
         setPickedCoordinates(newPickedCoordinates);
       } else {
-        setErrorMessage("You can only pick up to 10 locations");
+        setErrorMessage("You can only pick up to 20 locations");
       }
     }
   };
@@ -100,7 +100,7 @@ export default function Home() {
           endY: pickedCoordinates[0][1],
         })
         .then((res) => {
-          console.log(res)
+          console.log(res);
           setShortestPath(res.data.data);
         })
         .catch((err) => {
@@ -109,7 +109,7 @@ export default function Home() {
     } else if (
       mode === "Public" &&
       pickedCoordinates.length > 1 &&
-      pickedCoordinates.length <= 10
+      pickedCoordinates.length <= 20
     ) {
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}/ride-sharing`, {
