@@ -27,10 +27,10 @@ public class FindShortestPathController {
 
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> FindShortestPath(@RequestBody Map<String, String> body) {
-        String startY = body.getOrDefault("startX", null);
-        String startX = body.getOrDefault("startY", null);
-        String endY = body.getOrDefault("endX", null);
-        String endX = body.getOrDefault("endY", null);
+        String startX = body.getOrDefault("startX", null);
+        String startY = body.getOrDefault("startY", null);
+        String endX = body.getOrDefault("endX", null);
+        String endY = body.getOrDefault("endY", null);
 
         log.info("FindShortestPathController.request_payload: " + startX + " " + startY + " " + endX + " " + endY);
 
