@@ -48,9 +48,7 @@ jobs:
 
       - name: Add application.yml to api
         run: |
-          cd api/src/main/resources &&
-          ls -la &&
-          cat application.yml
+          echo "${{ secrets.API_APPLICATION }}" > api/src/main/resources/application.yml
 
       - name: Build Api Docker image
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKERHUB_REPOSITORY}}-api:latest ./api
@@ -80,4 +78,5 @@ jobs:
 
       - name: Pull and run Docker images on Droplet
         run: |
+          ssh ${{ secrets.SERVER_USER}}@${{ secrets.SERVER_IP_ADDRESS}} 'docker pull ${{ secrets.DOCKERHUB_USERNAME}}/${{ secrets.DOCKERHUB_REPOSITORY}}-api:latest'
           ssh ${{ secrets.SERVER_USER}}@${{ secrets.SERVER_IP_ADDRESS}} 'docker-compose up --build -d --force-recreate --remove-orphans api'
