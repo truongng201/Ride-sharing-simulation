@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://database:5432/journey_map
     username: admin
-    password: admin
+    password: GJztpPT1Nl9V1P8r85KSl0J1CYi8
     driver-class-name: org.postgresql.Driver
   sql:
     init:
