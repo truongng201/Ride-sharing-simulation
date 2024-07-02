@@ -710,19 +710,19 @@ public class GenMap {
 
     public static void genGraph() {
         int rows = map.length;
+        int[][] directions = new int[][] { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                if (map[i][j] == 0)
-                    System.out.println("i: " + i + " j: " + j);
                 if (map[i][j] == 1) {
-                    if (j + 1 < map[i].length && map[i][j + 1] == 1) {
-                        GraphOfSystem.addUnDirectedEdge(new Location(i, j),
-                                new Location(i, j + 1));
-                    }
-                    // Add edge downwards
-                    if (i + 1 < rows && map[i + 1][j] == 1) {
-                        GraphOfSystem.addUnDirectedEdge(new Location(i, j),
-                                new Location(i + 1, j));
+                    for (int[] direction : directions) {
+                        int newX = i + direction[0];
+                        int newY = j + direction[1];
+                        if (newX >= 0 && newX < rows && newY >= 0 && newY < map[i].length
+                                && map[newX][newY] == 1) {
+                            GraphOfSystem.addUnDirectedEdge(
+                                    new Location((double) i, (double) j),
+                                    new Location((double) newX, (double) newY));
+                        }
                     }
                 }
             }

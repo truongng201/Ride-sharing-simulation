@@ -10,7 +10,7 @@ public class RandomLocationGen {
         int cntRetry = 0;
         while (true) {
             if (cntRetry > 20) {
-                return new Location(0, 0);
+                return new Location(0.0, 0.0);
             }
             Random random = new Random();
             // Generate random row index
@@ -19,7 +19,7 @@ public class RandomLocationGen {
             // Generate random column index
             int col = random.nextInt(map[row].length);
             if (map[row][col] == 1) {
-                Location location = new Location(row, col);
+                Location location = new Location((double) row, (double)col);
                 return location;
             }
             cntRetry++;
