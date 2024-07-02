@@ -51,11 +51,10 @@ public class DriverSearch {
 
     public Driver findBestDriver(Customer customer) {
         // tìm tài xế tối ưu cho khách hàng
-        Driver nearestCentroids = new Driver();
+        Driver nearestCentroids = clusterings.keySet().iterator().next();
         for (Driver centroids : clusterings.keySet()) {
-            if (nearestCentroids.getId() == null ||
-                    centroids.getLocation().distanceTo(customer.getLocation()) < nearestCentroids.getLocation()
-                            .distanceTo(customer.getLocation()))
+            if (centroids.getLocation().distanceTo(customer.getLocation()) < nearestCentroids.getLocation()
+                    .distanceTo(customer.getLocation()))
                 nearestCentroids = centroids;
         }
         // nếu trong clusterings không có thằng nào tức là không tìm được tài xế ở xung
@@ -67,11 +66,10 @@ public class DriverSearch {
 
     public List<Driver> getAllBestDrivers(Customer customer) {
         // tìm tài xế tối ưu cho khách hàng
-        Driver nearestCentroids = new Driver();
+        Driver nearestCentroids = clusterings.keySet().iterator().next();
         for (Driver centroids : clusterings.keySet()) {
-            if (nearestCentroids.getId() == null ||
-                    centroids.getLocation().distanceTo(customer.getLocation()) < nearestCentroids.getLocation()
-                            .distanceTo(customer.getLocation()))
+            if (centroids.getLocation().distanceTo(customer.getLocation()) < nearestCentroids.getLocation()
+                    .distanceTo(customer.getLocation()))
                 nearestCentroids = centroids;
         }
         // nếu trong clusterings không có thằng nào tức là không tìm được tài xế ở xung
