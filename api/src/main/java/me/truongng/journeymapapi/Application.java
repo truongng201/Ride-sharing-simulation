@@ -14,5 +14,4 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 		log.info("Journey Map API started");
 	}
-	
 }
