@@ -21,6 +21,7 @@ const router = createBrowserRouter([
     element: window.innerWidth >= 1200 ? <RootLayout /> : <NotFoundPage />,
     errorElement: <NotFoundPage />,
     children: [
+      { path: "/", element: <Home /> },
       {
         path: "/",
         element: <JourneyMap />,
@@ -46,7 +47,6 @@ const router = createBrowserRouter([
           { path: "/forgot", element: <ForgotPassword /> },
           { path: "/signup", element: <Signup /> },
           { path: "/signin", element: <Signin /> },
-          { path: "/", element: <Home /> },
         ],
       },
     ],

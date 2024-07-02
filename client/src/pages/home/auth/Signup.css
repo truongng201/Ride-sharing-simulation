@@ -2,3 +2,80 @@
   border-radius: 30px;
   width: 100%;
 }
+
+.role-selection {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50px;
+  margin: 20px 0px;
+}
+
+.role-button {
+  width: 150px;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #0b022d;
+  background-color: white;
+  border: 3px solid #0b022d;
+  cursor: pointer;
+  line-height: 1rem;
+  font-weight: 600;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  transition: all 0.2s;
+}
+
+.role-button > span {
+  margin-left: 5px;
+}
+
+.role-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background-color: #0b022d;
+  color: white;
+  transition: all 0.2s;
+}
+
+.role-selected {
+  background-color: #0b022d;
+  color: white;
+  transition: all 0.2s;
+}
+
+.last-form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.last-form > .shared-form-control {
+  width: 100%;
+}
+.last-form > .retype-password-input {
+  width: 50%;
+}
+.last-form > .form-select {
+  transition: none;
+  padding: 5px 20px;
+  height: 50px;
+  border-radius: 10px;
+  border: 2px solid #0b022d;
+  font-size: 16px;
+  outline: none;
+  font-weight: 600;
+  color: #0b022d;
+  margin-left: 20px;
+  width: 45%;
+}
+
+.last-form > .form-select:focus {
+  box-shadow: none;
+  border: 2px solid rgba(18, 24, 38, 0.2);
+}

@@ -13,7 +13,7 @@ export default function ConfirmEmail({ email_type }) {
   `;
 
   const verify_content = `
-    You have successfully verified your account. 
+    You have successfully create your account. 
     Please wait for few seconds to be redirected to the login page.
   `;
 

@@ -1,10 +1,9 @@
 import "./Signin.css";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-import BackIcon from "../../../assets/icons/back.png";
 import AlertComponent from "../../../components/Alerts";
 import { EmailValidation, PasswordValidation } from "../../../utils/validation";
 import LoadingComponent from "../../../components/Loading";
@@ -14,8 +13,14 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [access_token] = useState(localStorage.getItem("access_token"));
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (access_token !== null && access_token !== "") {
+      navigate("/");
+    }
+  }, [access_token, navigate]);
   const signin = (e) => {
     e.preventDefault();
     if (!EmailValidation(email)) {
@@ -33,20 +38,14 @@ export default function Signin() {
           password: password,
         })
         .then((res) => {
-          localStorage.setItem("access_token", res.data.payload?.access_token);
+          console.log(res);
+          localStorage.setItem("access_token", res.data.data?.access_token);
           setIsLoading(false);
           navigate("/");
         })
         .catch((err) => {
+          console.log(err);
           setErrorMessage(err.response?.data?.message);
-          if (err.response?.data?.message === "Email not verified") {
-            setErrorMessage(
-              "Email not verified yet. We will redirect you to the verification page"
-            );
-            setTimeout(() => {
-              navigate("/reverify");
-            }, 5000);
-          }
           setIsLoading(false);
         });
     }
@@ -59,12 +58,7 @@ export default function Signin() {
   return (
     <div className="Signin">
       <div className="signin-upper-container">
-        <div className="back">
-          <Link to="/">
-            <img src={BackIcon} alt="icon" width={"16px"} height={"16px"} />
-            <span>Back</span>
-          </Link>
-        </div>
+        <div className="back"></div>
         <form className="shared-form">
           <div className="shared-form-group form-group-signin">
             <input

@@ -1,6 +1,6 @@
 import requests
 
-url  = 'http://localhost:8080/auth/signup'
+url  = 'https://api-journey-map.truongng.me/auth/signup'
 i = 0
 while True:
     import random
@@ -9,13 +9,14 @@ while True:
     # randome sttring username
     username = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=10))
     email = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=10)) + '@gmail.com'
+    vehicle_type = random.choice(['CAR4', 'CAR7', 'MOTORBIKE'])
     data={
         'username': username, 
         'password': 'abcde123456',
         'email': email,
         "role": "DRIVER",
-        "vehicle_type": "CAR4"
-                }
+        "vehicle_type": vehicle_type
+    }
     # convert data to json
     import json
     data = json.dumps(data)

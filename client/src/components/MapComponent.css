@@ -1,0 +1,43 @@
+.map-component {
+  width: "800px";
+  height: "800px";
+  overflow: "hidden";
+  position: relative;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.shortest-path-cell {
+  position: absolute;
+  background-color: #0047ab;
+  transition: top 0.5s ease, left 0.5s ease, width 0.5s ease, height 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.shortest-path-cell-appear {
+  animation: appear 0.5s ease forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.driver-tag {
+  position: absolute;
+  z-index: 1;
+}
+
+.user-tag {
+  position: absolute;
+  z-index: 1;
+}
+
+.picked-tag {
+  position: absolute;
+  z-index: 1;
+}
