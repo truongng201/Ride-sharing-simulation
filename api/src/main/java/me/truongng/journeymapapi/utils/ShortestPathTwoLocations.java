@@ -104,7 +104,7 @@ public class ShortestPathTwoLocations {
     }
 
     static public List<Location> getPath(Location From, Location To) {
-        System.out.println(From + " " + GenMap.modifiedLocation.get(From));
+        // System.out.println(From + " " + GenMap.modifiedLocation.get(From));
         From = GenMap.modifiedLocation.get(From);
         To = GenMap.modifiedLocation.get(To);
         return Dijkstra.getPath(From, To);
