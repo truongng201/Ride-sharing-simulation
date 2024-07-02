@@ -22,7 +22,9 @@ import me.truongng.journeymapapi.repository.UserRepository;
 import me.truongng.journeymapapi.utils.ResponseHandler;
 import me.truongng.journeymapapi.utils.exception.*;
 import me.truongng.journeymapapi.validation.SignInValidation;
+import me.truongng.journeymapapi.utils.JwtTokenUtil;
 import me.truongng.journeymapapi.utils.PasswordHasher;
+import me.truongng.journeymapapi.utils.RandomTokenGenerator;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,6 +35,8 @@ public class SignInController {
     private RefreshTokenRepository refreshTokenRepository;
     @Autowired
     private SignInValidation signInValidation;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     private Logger log = LoggerFactory.getLogger(SignInController.class);
 
@@ -52,16 +56,17 @@ public class SignInController {
         User user = users.get(0);
         if (!PasswordHasher.checkPassword(password, user.getPassword()))
             throw new UnauthorizedException("Invalid password");
-
-        RefreshToken refreshToken = new RefreshToken("random_refresh_token", user);
+        String accessToken = jwtTokenUtil.generateToken(user.getEmail());
+        String randRefreshToken = RandomTokenGenerator.generateNewToken();
+        RefreshToken refreshToken = new RefreshToken(randRefreshToken, user);
 
         if (!refreshTokenRepository.create(refreshToken))
             throw new InternalServerErrorException("Failed to create refresh token");
 
         HashMap<String, Object> response = new HashMap<>() {
             {
-                put("access_token", "random_access_token");
-                put("refreshToken", "random_refresh_token");
+                put("access_token", accessToken);
+                put("refreshToken", randRefreshToken);
             }
         };
         return ResponseHandler.responseBuilder(HttpStatus.OK, response);

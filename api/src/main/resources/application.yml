@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: journey-map-api
+  datasource:
+    url: jdbc:postgresql://database:5432/journey_map
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  jwt:
+    secret: secret
