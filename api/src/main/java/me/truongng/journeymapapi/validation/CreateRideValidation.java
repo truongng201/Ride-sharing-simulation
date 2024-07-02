@@ -6,8 +6,8 @@ import me.truongng.journeymapapi.utils.exception.BadRequestException;
 
 @Service
 public class CreateRideValidation {
-    public void validate(String endX, String endY, String customerId) {
-        if (endX == null || endY == null || customerId == null) {
+    public void validate(String endX, String endY) {
+        if (endX == null || endY == null) {
             throw new BadRequestException("Missing required fields");
         }
     }

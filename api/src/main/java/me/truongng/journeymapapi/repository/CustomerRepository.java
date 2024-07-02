@@ -12,48 +12,48 @@ import me.truongng.journeymapapi.models.User;
 
 @Repository
 public class CustomerRepository implements CustomerRespositoryInterface {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+        @Autowired
+        private JdbcTemplate jdbcTemplate;
 
-    @Override
-    public boolean create(Customer customer) {
-        int res = jdbcTemplate.update(
-                "INSERT INTO customers (user_id, current_x, current_y) VALUES (?, ?, ?)",
-                customer.getUserId(),
-                (int) customer.getLocation().getX(),
-                (int) customer.getLocation().getY());
-        return res == 1 ? true : false;
-    }
+        @Override
+        public boolean create(Customer customer) {
+                int res = jdbcTemplate.update(
+                                "INSERT INTO customers (user_id, current_x, current_y) VALUES (?, ?, ?)",
+                                customer.getUserId(),
+                                (int) customer.getLocation().getX(),
+                                (int) customer.getLocation().getY());
+                return res == 1 ? true : false;
+        }
 
-    @Override
-    public boolean update(Customer customer) {
-        int res = jdbcTemplate.update(
-                "UPDATE customers SET user_id = ?, current_x = ? WHERE id = ?",
-                customer.getUserId(),
-                (int) customer.getLocation().getX(),
-                (int) customer.getLocation().getY(),
-                customer.getId());
-        return res == 1 ? true : false;
-    }
+        @Override
+        public boolean update(Customer customer) {
+                int res = jdbcTemplate.update(
+                                "UPDATE customers SET user_id = ?, current_x = ? WHERE id = ?",
+                                customer.getUserId(),
+                                (int) customer.getLocation().getX(),
+                                (int) customer.getLocation().getY(),
+                                customer.getId());
+                return res == 1 ? true : false;
+        }
 
-    @Override
-    public List<Customer> findById(String id) {
-        return jdbcTemplate.query(
-                "SELECT user_id, current_x, current_y FROM customers WHERE id = ?",
-                (rs, rowNum) -> new Customer(
-                        new User(rs.getString("user_id"), null, null, null, null, null, null),
-                        new Location(rs.getInt("current_x"), rs.getInt("current_y"))),
-                Integer.parseInt(id));
-    }
+        @Override
+        public List<Customer> findById(String id) {
+                return jdbcTemplate.query(
+                                "SELECT user_id, current_x, current_y FROM customers WHERE id = ?",
+                                (rs, rowNum) -> new Customer(
+                                                new User(rs.getString("user_id"), null, null, null, null, null, null),
+                                                new Location(rs.getInt("current_x"), rs.getInt("current_y"))),
+                                Integer.parseInt(id));
+        }
 
-    @Override
-    public List<Customer> findByUserId(String userId) {
-        return jdbcTemplate.query(
-                "SELECT id, current_x, current_y FROM customers WHERE user_id = ?",
-                (rs, rowNum) -> new Customer(
-                        null,
-                        new Location(rs.getInt("current_x"), rs.getInt("current_y"))),
-                Integer.parseInt(userId));
-    }
+        @Override
+        public List<Customer> findByUserId(String userId) {
+                return jdbcTemplate.query(
+                                "SELECT id, current_x, current_y FROM customers WHERE user_id = ?",
+                                (rs, rowNum) -> new Customer(
+                                                rs.getString("id"),
+                                                new Location(rs.getInt("current_x"), rs.getInt("current_y"))),
+                                Integer.parseInt(userId));
+        }
 
 }

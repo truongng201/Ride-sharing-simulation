@@ -55,7 +55,7 @@ public class RideRepository implements RideRespositoryInterface {
 				"SELECT rides.id as ride_id, customer_id, driver_id, start_x, start_y, end_x, end_y, status, fare FROM rides WHERE rides.id = ?",
 				(rs, rowNum) -> new Ride(
 						rs.getString("ride_id"),
-						new Customer(rs.getString("customer_id")),
+						new Customer(rs.getString("customer_id"), null),
 						new Driver(rs.getString("driver_id")),
 						new Location(rs.getInt("start_x"), rs.getInt("start_y")),
 						new Location(rs.getInt("end_x"), rs.getInt("end_y")),

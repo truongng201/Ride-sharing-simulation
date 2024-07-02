@@ -13,8 +13,9 @@ public class Customer {
         this.location = location;
     }
 
-    public Customer(String id) {
+    public Customer(String id, Location location) {
         this.id = id;
+        this.location = location;
     }
 
     public String getId() {
