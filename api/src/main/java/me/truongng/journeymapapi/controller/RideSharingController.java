@@ -48,6 +48,7 @@ public class RideSharingController {
 
         ArrayList<Location> pickUpOrder = journey.OrderOfLocations(pickupLocations);
         ArrayList<int[]> res = new ArrayList<>();
+        pickUpOrder.addFirst(new Location(start_x, start_y));
         for (int i = 0; i < pickUpOrder.size() - 1; i++) {
             ShortestPathTwoLocations.getPath(pickUpOrder.get(i), pickUpOrder.get(i + 1)).forEach(loc -> {
                 res.add(new int[] { (int) loc.getX(), (int) loc.getY() });
